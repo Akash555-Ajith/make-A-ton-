@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowDown, Radio, Play, ShieldAlert, Mail } from 'lucide-react';
+// Import local GIF asset to guarantee stable offline rendering and bypass hotlink protection
+import spideyBg from '../assets/spiderman-bg.gif';
 
 export default function LandingPage({ onEnterPortal }) {
   
@@ -95,11 +97,11 @@ export default function LandingPage({ onEnterPortal }) {
         borderBottom: '1px solid rgba(255,255,255,0.02)',
         overflow: 'hidden'
       }}>
-        {/* Moving Spiderman Movie Scene Background GIF */}
+        {/* Local Spiderman Movie Scene Background GIF */}
         <div style={{
           position: 'absolute',
           top: 0, left: 0, right: 0, bottom: 0,
-          backgroundImage: 'url("https://media.giphy.com/media/sfVEz12nVfCI0/giphy.gif")',
+          backgroundImage: `url(${spideyBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           opacity: 0.08,
@@ -229,11 +231,11 @@ export default function LandingPage({ onEnterPortal }) {
               border: '1px solid rgba(255,255,255,0.02)',
               overflow: 'hidden'
             }}>
-              {/* Subtle spiderman moving GIF in this section too */}
+              {/* Local Spiderman moving GIF */}
               <div style={{
                 position: 'absolute',
                 top: 0, left: 0, right: 0, bottom: 0,
-                backgroundImage: 'url("https://media.giphy.com/media/10K5IaprsKC95m/giphy.gif")',
+                backgroundImage: `url(${spideyBg})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 opacity: 0.05,
