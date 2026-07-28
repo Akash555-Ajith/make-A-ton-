@@ -14,8 +14,8 @@ export default function LandingPage({ onEnterPortal }) {
         width: '600px',
         height: '600px',
         pointerEvents: 'none',
-        opacity: 0.1,
-        zIndex: 0,
+        opacity: 0.12,
+        zIndex: 1,
         animation: 'webSpin 120s linear infinite'
       }}>
         <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@ export default function LandingPage({ onEnterPortal }) {
         width: '100px',
         height: '180px',
         pointerEvents: 'none',
-        zIndex: 1,
+        zIndex: 2,
         opacity: 0.25,
         transformOrigin: 'top center',
         animation: 'spideySwing 12s ease-in-out infinite'
@@ -62,19 +62,13 @@ export default function LandingPage({ onEnterPortal }) {
         }} />
         {/* Spider-Man Hanging Silhouette */}
         <svg width="40" height="70" viewBox="0 0 40 70" fill="var(--color-marvel-red)" style={{ margin: '0 auto', display: 'block' }}>
-          {/* Head */}
-          <ellipse cx="20" cy="12" rx="6" ry="8" />
+          <circle cx="20" cy="12" r="5" fill="var(--color-marvel-red)" />
           {/* Eyes */}
-          <path d="M16 11 L19 13 L19 10 Z" fill="white" />
-          <path d="M24 11 L21 13 L21 10 Z" fill="white" />
+          <path d="M17 11 L19 12 L19 10 Z" fill="white" />
+          <path d="M23 11 L21 12 L21 10 Z" fill="white" />
           {/* Body */}
           <path d="M15 20 L25 20 L28 40 L12 40 Z" />
-          {/* Spider Symbol */}
-          <circle cx="20" cy="28" r="2.5" fill="black" />
-          <line x1="20" y1="28" x2="16" y2="24" stroke="black" strokeWidth="0.8" />
-          <line x1="20" y1="28" x2="24" y2="24" stroke="black" strokeWidth="0.8" />
-          <line x1="20" y1="28" x2="15" y2="30" stroke="black" strokeWidth="0.8" />
-          <line x1="20" y1="28" x2="25" y2="30" stroke="black" strokeWidth="0.8" />
+          <circle cx="20" cy="28" r="2" fill="black" />
           {/* Legs pulled in hanging style */}
           <path d="M13 40 L8 52 L14 62" stroke="var(--color-marvel-red)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           <path d="M27 40 L32 52 L26 62" stroke="var(--color-marvel-red)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -98,9 +92,23 @@ export default function LandingPage({ onEnterPortal }) {
         justifyContent: 'center',
         position: 'relative',
         padding: '6rem 2rem 2rem 2rem',
-        borderBottom: '1px solid rgba(255,255,255,0.02)'
+        borderBottom: '1px solid rgba(255,255,255,0.02)',
+        overflow: 'hidden'
       }}>
-        {/* Background elements */}
+        {/* Moving Spiderman Movie Scene Background GIF */}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundImage: 'url("https://media.giphy.com/media/sfVEz12nVfCI0/giphy.gif")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.08,
+          zIndex: 0,
+          mixBlendMode: 'luminosity',
+          pointerEvents: 'none'
+        }} />
+
+        {/* Dynamic Vector overlays */}
         {renderWebSpinner()}
         {renderSwingingSpiderman()}
 
@@ -109,7 +117,7 @@ export default function LandingPage({ onEnterPortal }) {
           maxWidth: '800px', 
           margin: '0 auto', 
           textAlign: 'center', 
-          zIndex: 2,
+          zIndex: 3,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -128,7 +136,7 @@ export default function LandingPage({ onEnterPortal }) {
             TOGETHER.
           </h1>
           
-          {/* Action buttons matching screenshot */}
+          {/* Action buttons */}
           <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button 
               onClick={onEnterPortal}
@@ -157,7 +165,7 @@ export default function LandingPage({ onEnterPortal }) {
             </button>
           </div>
 
-          {/* Slow Bouncing Bouncing Bouncing Bouncing Bouncing arrow indicator */}
+          {/* Bouncing arrow indicator */}
           <div style={{ marginTop: '4rem', animation: 'bounceArrow 2s infinite' }}>
             <ArrowDown size={28} color="var(--color-marvel-red)" />
           </div>
@@ -169,10 +177,7 @@ export default function LandingPage({ onEnterPortal }) {
       <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--bg-cinema-dark)', borderBottom: '1px solid rgba(255,255,255,0.02)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '4rem', alignItems: 'center' }} className="threat-columns">
           
-          {/* Specs on Left */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            
-            {/* Title with left red indicator bar */}
             <div style={{ display: 'flex', alignItems: 'stretch', gap: '1rem' }}>
               <div style={{ width: '4px', backgroundColor: 'var(--color-marvel-red)' }} />
               <h2 style={{ fontSize: '2rem', color: '#fff', margin: 0, fontWeight: 900 }}>
@@ -184,7 +189,6 @@ export default function LandingPage({ onEnterPortal }) {
               With Peter Parker struggling to balance his responsibilities, a mysterious force begins to unravel the very fabric of New York City. 'Brand New Day' marks a return to the character's core agility and grit, forcing hackers to confront programming anomalies old and new.
             </p>
 
-            {/* Tags matching theatres tag */}
             <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
               <span style={{
                 border: '1px solid rgba(255,255,255,0.15)',
@@ -209,7 +213,6 @@ export default function LandingPage({ onEnterPortal }) {
                 HACKATHON ACTIVE
               </span>
             </div>
-
           </div>
 
           {/* Graphic on Right (Red Corner Frame) */}
@@ -223,23 +226,37 @@ export default function LandingPage({ onEnterPortal }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              border: '1px solid rgba(255,255,255,0.02)'
+              border: '1px solid rgba(255,255,255,0.02)',
+              overflow: 'hidden'
             }}>
+              {/* Subtle spiderman moving GIF in this section too */}
+              <div style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundImage: 'url("https://media.giphy.com/media/10K5IaprsKC95m/giphy.gif")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.05,
+                zIndex: 0,
+                mixBlendMode: 'luminosity',
+                pointerEvents: 'none'
+              }} />
+
               {/* Red Corners layout */}
-              <div style={{ position: 'absolute', top: 0, left: 0, width: '12px', height: '12px', borderTop: '2px solid var(--color-marvel-red)', borderLeft: '2px solid var(--color-marvel-red)' }} />
-              <div style={{ position: 'absolute', top: 0, right: 0, width: '12px', height: '12px', borderTop: '2px solid var(--color-marvel-red)', borderRight: '2px solid var(--color-marvel-red)' }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '12px', height: '12px', borderBottom: '2px solid var(--color-marvel-red)', borderLeft: '2px solid var(--color-marvel-red)' }} />
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: '12px', height: '12px', borderBottom: '2px solid var(--color-marvel-red)', borderRight: '2px solid var(--color-marvel-red)' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '12px', height: '12px', borderTop: '2px solid var(--color-marvel-red)', borderLeft: '2px solid var(--color-marvel-red)', zIndex: 1 }} />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '12px', height: '12px', borderTop: '2px solid var(--color-marvel-red)', borderRight: '2px solid var(--color-marvel-red)', zIndex: 1 }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '12px', height: '12px', borderBottom: '2px solid var(--color-marvel-red)', borderLeft: '2px solid var(--color-marvel-red)', zIndex: 1 }} />
+              <div style={{ position: 'absolute', bottom: 0, right: 0, width: '12px', height: '12px', borderBottom: '2px solid var(--color-marvel-red)', borderRight: '2px solid var(--color-marvel-red)', zIndex: 1 }} />
               
               {/* Radar scanner graphics */}
-              <svg width="80%" height="80%" viewBox="0 0 100 100" style={{ opacity: 0.15 }}>
+              <svg width="80%" height="80%" viewBox="0 0 100 100" style={{ opacity: 0.15, zIndex: 1 }}>
                 <path d="M50 15 C30 30, 30 70, 50 85 C70 70, 70 30, 50 15 Z" stroke="white" strokeWidth="1" fill="none" />
                 <path d="M50 30 C40 40, 40 60, 50 70 C60 60, 60 40, 50 30 Z" stroke="white" strokeWidth="0.8" fill="none" />
                 <line x1="50" y1="0" x2="50" y2="100" stroke="white" strokeWidth="0.5" />
                 <line x1="0" y1="50" x2="100" y2="50" stroke="white" strokeWidth="0.5" />
               </svg>
               
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', color: 'var(--color-marvel-red)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', color: 'var(--color-marvel-red)', zIndex: 2 }}>
                 <ShieldAlert size={40} style={{ opacity: 0.7 }} />
                 <span style={{ fontSize: '0.62rem', letterSpacing: '2px', color: 'white', fontWeight: 800 }}>ORCHESTRATION SHIELD</span>
               </div>
@@ -260,7 +277,6 @@ export default function LandingPage({ onEnterPortal }) {
             <div style={{ width: '40px', height: '2px', backgroundColor: 'var(--color-marvel-red)', margin: '0.5rem auto' }} />
           </div>
 
-          {/* Cards Layout matching "The Ensemble" screenshot grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }} className="ensemble-grid">
             
             {/* Card 1 */}
@@ -365,7 +381,6 @@ export default function LandingPage({ onEnterPortal }) {
         </div>
       </footer>
 
-      {/* CSS Styles injection */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes webSpin {
           from { transform: translateX(-50%) rotate(0deg); }
