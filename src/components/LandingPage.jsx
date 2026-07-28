@@ -105,9 +105,9 @@ export default function LandingPage({ onEnterPortal }) {
           backgroundImage: `url(${spideyHero})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.22, // Set opacity to beautifully blend moon and spidey with text
+          opacity: 0.22,
           zIndex: 0,
-          mixBlendMode: 'screen', // Blend nicely with dark theme
+          mixBlendMode: 'screen',
           pointerEvents: 'none'
         }} />
 
@@ -283,8 +283,17 @@ export default function LandingPage({ onEnterPortal }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }} className="ensemble-grid">
             
-            {/* Card 1 */}
-            <div className="framed-image-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '220px', backgroundColor: 'var(--bg-cinema-dark)', border: '1px solid rgba(255,255,255,0.02)' }}>
+            {/* Card 1: Peter Parker (Spider-Man) */}
+            <div className="framed-image-container" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              minHeight: '220px', 
+              backgroundColor: 'var(--bg-cinema-dark)', 
+              border: '1px solid rgba(255,255,255,0.02)',
+              backgroundImage: 'url("https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
                 <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>PETER PARKER</h3>
@@ -292,8 +301,17 @@ export default function LandingPage({ onEnterPortal }) {
               </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="framed-image-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '220px', backgroundColor: 'var(--bg-cinema-dark)', border: '1px solid rgba(255,255,255,0.02)' }}>
+            {/* Card 2: Black Cat */}
+            <div className="framed-image-container" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              minHeight: '220px', 
+              backgroundColor: 'var(--bg-cinema-dark)', 
+              border: '1px solid rgba(255,255,255,0.02)',
+              backgroundImage: 'url("https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
                 <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>BLACK CAT</h3>
@@ -301,8 +319,18 @@ export default function LandingPage({ onEnterPortal }) {
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="framed-image-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '220px', backgroundColor: 'var(--bg-cinema-dark)', border: '1px solid rgba(255,255,255,0.02)' }}>
+            {/* Card 3: Mr. Negative (Inverted Portrait using CSS filter) */}
+            <div className="framed-image-container" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              minHeight: '220px', 
+              backgroundColor: 'var(--bg-cinema-dark)', 
+              border: '1px solid rgba(255,255,255,0.02)',
+              backgroundImage: 'url("https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=600&q=80")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              filter: 'invert(0.9) contrast(1.2)' /* Custom negative look */
+            }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
                 <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>MR. NEGATIVE</h3>
@@ -310,8 +338,18 @@ export default function LandingPage({ onEnterPortal }) {
               </div>
             </div>
 
-            {/* Card 4 (Full Width below) */}
-            <div className="framed-image-container" style={{ gridColumn: 'span 3', display: 'flex', flexDirection: 'column', minHeight: '200px', backgroundColor: 'var(--bg-cinema-dark)', border: '1px solid rgba(255,255,255,0.02)' }} className="ensemble-fullwidth">
+            {/* Card 4: New York City skyline (Full Width below) */}
+            <div className="framed-image-container" style={{ 
+              gridColumn: 'span 3', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              minHeight: '200px', 
+              backgroundColor: 'var(--bg-cinema-dark)', 
+              border: '1px solid rgba(255,255,255,0.02)',
+              backgroundImage: 'url("https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1200&q=80")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }} className="ensemble-fullwidth">
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
                 <h3 style={{ fontSize: '1.1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>NEW YORK CITY</h3>
