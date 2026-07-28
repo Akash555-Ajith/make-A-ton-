@@ -64,8 +64,28 @@ export default function Header({ activeTab, setActiveTab }) {
           })}
         </nav>
 
-        {/* Call to Action Button on Right */}
-        <div>
+        {/* Call to Action Controls on Right */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          {/* Disconnect Gateway Link */}
+          <button
+            onClick={() => setActiveTab('logout')}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--color-text-muted)',
+              fontFamily: 'var(--font-display)',
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              cursor: 'pointer',
+              transition: 'var(--transition-fast)'
+            }}
+            className="disconnect-btn"
+          >
+            Disconnect
+          </button>
+          
           <button 
             onClick={() => setActiveTab('submit')}
             className="cinema-button-red"
@@ -81,6 +101,12 @@ export default function Header({ activeTab, setActiveTab }) {
         </div>
 
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .disconnect-btn:hover {
+          color: var(--color-marvel-red) !important;
+        }
+      `}} />
     </header>
   );
 }

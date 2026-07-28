@@ -4,6 +4,7 @@ import FilterSidebar from './components/FilterSidebar';
 import ProjectCard from './components/ProjectCard';
 import ProjectModal from './components/ProjectModal';
 import SubmitForm from './components/SubmitForm';
+import LandingPage from './components/LandingPage';
 import { initialProjects, initialParticipants } from './data/projects';
 import { Shield, Trophy, Users, Heart, Award, ArrowRight, Play, Eye } from 'lucide-react';
 
@@ -11,6 +12,10 @@ export default function App() {
   const [projects, setProjects] = useState(initialProjects);
   const [participants] = useState(initialParticipants);
   
+  // Visitor State Gateway
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+
   // Navigation & Modal triggers
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedProject, setSelectedProject] = useState(null);
@@ -21,7 +26,7 @@ export default function App() {
   const [selectedPrizes, setSelectedPrizes] = useState([]);
   const [sortOption, setSortOption] = useState('newest');
 
-  // Pagination State (3 projects per page matching screenshot grid)
+  // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 3;
 
@@ -30,8 +35,52 @@ export default function App() {
   const submissionsRef = useRef(null);
   const guildRef = useRef(null);
 
-  // Handle tab clicks with smooth scrolling
+  // Telemetry stats
+  const stats = useMemo(() => {
+    return {
+      totalProjects: projects.length,
+      totalLikes: projects.reduce((sum, p) => sum + p.likes, 0),
+      totalParticipants: participants.length,
+      activePatrols: participants.filter(p => p.active).length
+    };
+  }, [projects, participants]);
+
+  // Transition Handler for Portal Entry
+  const handleEnterPortal = () => {
+    setTransitioning(true);
+    // Cool Web Shoot transition timing
+    setTimeout(() => {
+      setIsLoggedIn(true);
+      setActiveTab('gallery');
+      setTimeout(() => {
+        if (submissionsRef.current) {
+          submissionsRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }, 700);
+    setTimeout(() => {
+      setTransitioning(false);
+    }, 1200);
+  };
+
+  // Disconnect handler
+  const handleLogout = () => {
+    setTransitioning(true);
+    setTimeout(() => {
+      setIsLoggedIn(false);
+      setActiveTab('overview');
+    }, 700);
+    setTimeout(() => {
+      setTransitioning(false);
+    }, 1200);
+  };
+
+  // Handle Tab Clicks
   const handleTabChange = (tabId) => {
+    if (tabId === 'logout') {
+      handleLogout();
+      return;
+    }
     setActiveTab(tabId);
     if (tabId === 'overview' && missionRef.current) {
       missionRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -107,120 +156,66 @@ export default function App() {
 
   const totalPages = Math.ceil(processedProjects.length / projectsPerPage);
 
+  const changePage = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Render transition screen (Web Shoot Overlay)
+  const renderTransitionScreen = () => {
+    if (!transitioning) return null;
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: 'var(--bg-cinema-black)',
+        zIndex: 100000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden'
+      }}>
+        {/* Flying White Web Line */}
+        <div style={{
+          position: 'absolute',
+          width: '4px',
+          height: '200%',
+          backgroundColor: '#fff',
+          boxShadow: '0 0 20px #fff, 0 0 40px var(--color-marvel-red)',
+          transform: 'rotate(-45deg)',
+          animation: 'shootWebLine 0.9s cubic-bezier(0.19, 1, 0.22, 1) forwards'
+        }} />
+      </div>
+    );
+  };
+
+  // Renders either the gateway or the main dashboard
+  if (!isLoggedIn) {
+    return (
+      <>
+        <LandingPage onEnterPortal={handleEnterPortal} />
+        {renderTransitionScreen()}
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes shootWebLine {
+            0% { transform: translate(-100%, -100%) rotate(-45deg); opacity: 0; }
+            50% { transform: translate(0%, 0%) rotate(-45deg); opacity: 1; }
+            100% { transform: translate(100%, 100%) rotate(-45deg); opacity: 0; }
+          }
+        `}} />
+      </>
+    );
+  }
+
   return (
     <div style={{ backgroundColor: 'var(--bg-cinema-black)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
       {/* Cinematic Header Nav */}
       <Header activeTab={activeTab} setActiveTab={handleTabChange} />
 
-      {/* 1. HERO SECTION */}
-      <section style={{ 
-        minHeight: '85vh',
-        background: 'radial-gradient(circle at 85% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%), linear-gradient(180deg, #181818 0%, var(--bg-cinema-black) 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        padding: '4rem 2rem'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }} className="hero-columns">
-          
-          {/* Left Text details */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <span style={{ 
-              fontSize: '0.72rem', 
-              color: 'var(--color-marvel-red)', 
-              fontWeight: 800, 
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase'
-            }}>
-              MARVEL STUDIOS & CITTIC PRESENTS
-            </span>
-            <h1 style={{ 
-              fontSize: '4.2rem', 
-              lineHeight: '0.95', 
-              fontWeight: 900,
-              fontFamily: 'var(--font-display)',
-              color: '#fff'
-            }}>
-              EVERY HACKER<br />
-              <span style={{ color: 'var(--color-marvel-red)' }}>HAS A CHOICE</span>
-            </h1>
-            <p style={{ 
-              fontSize: '0.95rem', 
-              color: 'var(--color-text-muted)', 
-              lineHeight: '1.6',
-              maxWidth: '480px'
-            }}>
-              Peter Parker's world has been unmasked, his secrets laid bare. In a reality where code can no longer hide, the true weight of the prototype becomes heavier than ever. Deploy your web blueprints before the countdown runs out.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              <button 
-                onClick={() => handleTabChange('submit')}
-                className="cinema-button-red"
-                style={{ padding: '0.9rem 2rem' }}
-              >
-                SUBMIT BLUEPRINT
-              </button>
-              <button 
-                onClick={() => handleTabChange('gallery')}
-                style={{ 
-                  background: 'none', 
-                  border: '2px solid rgba(255,255,255,0.2)',
-                  color: 'white',
-                  padding: '0.9rem 2rem',
-                  textTransform: 'uppercase',
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.15em',
-                  fontWeight: 800,
-                  cursor: 'pointer',
-                  transition: 'var(--transition-fast)'
-                }}
-                className="trailer-btn"
-              >
-                EXPLORE GALLERY
-              </button>
-            </div>
-          </div>
-
-          {/* Right Vector Graphics Display */}
-          <div style={{ display: 'flex', justifyContent: 'center' }} className="hero-graphic">
-            <div style={{ 
-              width: '100%', 
-              maxWidth: '420px', 
-              height: '280px',
-              backgroundColor: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.05)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative'
-            }}>
-              {/* Radar Targets Overlay */}
-              <svg width="100%" height="100%" style={{ position: 'absolute', opacity: 0.15 }}>
-                <circle cx="50%" cy="50%" r="30" stroke="var(--color-marvel-red)" strokeWidth="1" fill="none" />
-                <circle cx="50%" cy="50%" r="60" stroke="var(--color-marvel-red)" strokeWidth="1.2" strokeDasharray="5,5" fill="none" />
-                <circle cx="50%" cy="50%" r="90" stroke="var(--color-marvel-red)" strokeWidth="1" fill="none" />
-                <line x1="0" y1="0" x2="100%" y2="100%" stroke="var(--color-marvel-red)" strokeWidth="0.5" />
-                <line x1="100%" y1="0" x2="0" y2="100%" stroke="var(--color-marvel-red)" strokeWidth="0.5" />
-              </svg>
-              <div style={{ position: 'absolute', top: '15px', left: '15px', fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontFamily: 'monospace', letterSpacing: '2px' }}>
-                HACK: ACTIVE_PATROL
-              </div>
-              <div style={{ color: 'var(--color-marvel-red)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <Play size={48} style={{ opacity: 0.8 }} fill="currentColor" />
-                <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'white', fontWeight: 800 }}>Watch Telemetry Trailer</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
       {/* 2. THE MISSION SECTION (matches THE STORY in screenshot) */}
-      <section ref={missionRef} style={{ padding: '6rem 2rem', backgroundColor: 'var(--bg-cinema-dark)' }}>
+      <section ref={missionRef} style={{ padding: '6rem 2rem', backgroundColor: 'var(--bg-cinema-dark)', borderBottom: '1px solid rgba(255,255,255,0.02)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '4rem', alignItems: 'center' }} className="story-columns">
-          
-          {/* Mission specs text on left */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <h2 style={{ fontSize: '2rem', color: '#fff' }}>
               THE <span className="outline-text">MISSION</span>
@@ -233,7 +228,6 @@ export default function App() {
             </p>
           </div>
 
-          {/* Framed Graphic on right (Offset border effect) */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="framed-image-container" style={{ width: '100%', maxWidth: '480px' }}>
               <div className="framed-image" style={{ 
@@ -266,7 +260,6 @@ export default function App() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -284,7 +277,6 @@ export default function App() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2.5rem' }} className="gallery-columns">
-            {/* Filter controls */}
             <FilterSidebar 
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -294,7 +286,6 @@ export default function App() {
               setSortOption={setSortOption}
             />
 
-            {/* Submissions Grid */}
             <div>
               {processedProjects.length === 0 ? (
                 <div style={{
@@ -323,7 +314,7 @@ export default function App() {
                     ))}
                   </div>
 
-                  {/* Centered Pagination matching screenshot style */}
+                  {/* Centered Pagination */}
                   {totalPages > 1 && (
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
                       {Array.from({ length: totalPages }).map((_, idx) => {
@@ -359,17 +350,14 @@ export default function App() {
               )}
             </div>
           </div>
-
         </div>
       </section>
 
       <hr className="section-divider" />
 
-      {/* 4. THE CAST & CREW SECTION (Guild & Sponsors) */}
+      {/* 4. THE CAST & CREW SECTION */}
       <section ref={guildRef} style={{ padding: '4rem 2rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          
-          {/* Section Header with Line */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '3.5rem' }}>
             <h2 style={{ fontSize: '1.8rem', color: '#fff', margin: 0, whiteSpace: 'nowrap' }}>
               THE <span style={{ color: 'var(--color-marvel-red)' }}>GUILD</span> & SPONSORS
@@ -377,7 +365,6 @@ export default function App() {
             <div style={{ flexGrow: 1, height: '2px', backgroundColor: 'rgba(226, 32, 38, 0.4)' }} />
           </div>
 
-          {/* Participant Cast Cards (4 Column Grid) */}
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
@@ -393,7 +380,6 @@ export default function App() {
                     className="framed-image"
                     style={{ height: '260px', width: '100%' }}
                   />
-                  {/* Small Overlay Label */}
                   <div style={{
                     position: 'absolute',
                     bottom: '10px',
@@ -422,7 +408,6 @@ export default function App() {
             ))}
           </div>
 
-          {/* Sponsors Credits List (Crew) */}
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-around', 
@@ -445,7 +430,6 @@ export default function App() {
               <h4 style={{ fontSize: '1.1rem', color: 'white', marginTop: '0.25rem' }}>DEVPOST PLATFORM</h4>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -501,7 +485,6 @@ export default function App() {
       {/* FOOTER */}
       <footer style={{ backgroundColor: '#0d0d0d', padding: '3rem 2rem', borderTop: '1px solid rgba(255,255,255,0.02)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }} className="footer-columns">
-          
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
             <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1rem', letterSpacing: '2px', color: '#fff' }}>
               MAKE-A-TON
@@ -517,7 +500,6 @@ export default function App() {
             <a href="#" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }} className="foot-link">Help Desk</a>
             <a href="#" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }} className="foot-link">Contact</a>
           </div>
-
         </div>
       </footer>
 
@@ -554,7 +536,6 @@ export default function App() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close trigger button */}
             <button 
               onClick={() => setShowSubmitModal(false)}
               style={{
@@ -581,24 +562,25 @@ export default function App() {
         </div>
       )}
 
+      {/* Transition screen overlay */}
+      {renderTransitionScreen()}
+
       <style dangerouslySetInnerHTML={{__html: `
-        .trailer-btn:hover {
-          background-color: rgba(255,255,255,0.05) !important;
-          border-color: white !important;
-        }
         .foot-link:hover {
           color: white !important;
         }
         .signup-submit-btn:hover {
           background-color: #f0f0f0 !important;
         }
+        @keyframes shootWebLine {
+          0% { transform: translate(-100%, -100%) rotate(-45deg); opacity: 0; }
+          50% { transform: translate(0%, 0%) rotate(-45deg); opacity: 1; }
+          100% { transform: translate(100%, 100%) rotate(-45deg); opacity: 0; }
+        }
         @media (max-width: 768px) {
-          .hero-columns, .story-columns, .gallery-columns, .footer-columns, .newsletter-container {
+          .story-columns, .gallery-columns, .footer-columns, .newsletter-container {
             grid-template-columns: 1fr !important;
             flex-direction: column !important;
-          }
-          .hero-graphic {
-            order: -1;
           }
         }
       `}} />
