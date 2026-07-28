@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowDown, Radio, Play, ShieldAlert, Mail } from 'lucide-react';
-// Import local GIF asset to guarantee stable offline rendering and bypass hotlink protection
+// Import local assets
+import spideyHero from '../assets/spiderman-hero-swing.png';
 import spideyBg from '../assets/spiderman-bg.gif';
 
 export default function LandingPage({ onEnterPortal }) {
@@ -51,7 +52,7 @@ export default function LandingPage({ onEnterPortal }) {
         height: '180px',
         pointerEvents: 'none',
         zIndex: 2,
-        opacity: 0.25,
+        opacity: 0.2,
         transformOrigin: 'top center',
         animation: 'spideySwing 12s ease-in-out infinite'
       }}>
@@ -87,7 +88,7 @@ export default function LandingPage({ onEnterPortal }) {
       
       {/* 1. HERO HERO SECTION */}
       <section style={{ 
-        minHeight: '90vh',
+        minHeight: '95vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -97,16 +98,16 @@ export default function LandingPage({ onEnterPortal }) {
         borderBottom: '1px solid rgba(255,255,255,0.02)',
         overflow: 'hidden'
       }}>
-        {/* Local Spiderman Movie Scene Background GIF */}
+        {/* User-uploaded Spiderman Hero Swing Background Image */}
         <div style={{
           position: 'absolute',
           top: 0, left: 0, right: 0, bottom: 0,
-          backgroundImage: `url(${spideyBg})`,
+          backgroundImage: `url(${spideyHero})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.08,
+          opacity: 0.22, // Set opacity to beautifully blend moon and spidey with text
           zIndex: 0,
-          mixBlendMode: 'luminosity',
+          mixBlendMode: 'screen', // Blend nicely with dark theme
           pointerEvents: 'none'
         }} />
 
@@ -123,7 +124,7 @@ export default function LandingPage({ onEnterPortal }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '2rem'
+          gap: '2.2rem'
         }}>
           
           <h1 style={{ 
@@ -132,7 +133,8 @@ export default function LandingPage({ onEnterPortal }) {
             lineHeight: '1.0', 
             letterSpacing: '-0.02em',
             fontFamily: 'var(--font-display)',
-            color: '#fff'
+            color: '#fff',
+            textShadow: '0 4px 20px rgba(0,0,0,0.8)'
           }}>
             BE <span style={{ color: 'var(--color-marvel-red)' }}>GREATER.</span><br />
             TOGETHER.
@@ -168,7 +170,7 @@ export default function LandingPage({ onEnterPortal }) {
           </div>
 
           {/* Bouncing arrow indicator */}
-          <div style={{ marginTop: '4rem', animation: 'bounceArrow 2s infinite' }}>
+          <div style={{ marginTop: '4.5rem', animation: 'bounceArrow 2s infinite' }}>
             <ArrowDown size={28} color="var(--color-marvel-red)" />
           </div>
 
