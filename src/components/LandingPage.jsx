@@ -3,6 +3,9 @@ import { ArrowDown, Radio, Play, ShieldAlert, Mail } from 'lucide-react';
 // Import local assets
 import spideyHero from '../assets/spiderman-hero-swing.png';
 import spideyBg from '../assets/spiderman-bg.gif';
+import castAndrew from '../assets/cast-andrew.png';
+import castGwen from '../assets/cast-gwen.png';
+import castElectro from '../assets/cast-electro.png';
 
 export default function LandingPage({ onEnterPortal }) {
   
@@ -274,7 +277,7 @@ export default function LandingPage({ onEnterPortal }) {
       <section style={{ padding: '6rem 2rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <div style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)', textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.4rem', fontFamily: 'var(--font-display)', fontStyle: 'italic', fontWeight: 800, color: 'white', letterSpacing: '1px' }}>
               THE ENSEMBLE
             </h2>
@@ -283,16 +286,16 @@ export default function LandingPage({ onEnterPortal }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }} className="ensemble-grid">
             
-            {/* Card 1: Peter Parker (Spider-Man) */}
+            {/* Card 1: Peter Parker (Andrew Garfield) */}
             <div className="framed-image-container" style={{ 
               display: 'flex', 
               flexDirection: 'column', 
               minHeight: '220px', 
               backgroundColor: 'var(--bg-cinema-dark)', 
               border: '1px solid rgba(255,255,255,0.02)',
-              backgroundImage: 'url("https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80")',
+              backgroundImage: `url(${castAndrew})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center top'
             }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
@@ -301,40 +304,39 @@ export default function LandingPage({ onEnterPortal }) {
               </div>
             </div>
 
-            {/* Card 2: Black Cat */}
+            {/* Card 2: Gwen Stacy */}
             <div className="framed-image-container" style={{ 
               display: 'flex', 
               flexDirection: 'column', 
               minHeight: '220px', 
               backgroundColor: 'var(--bg-cinema-dark)', 
               border: '1px solid rgba(255,255,255,0.02)',
-              backgroundImage: 'url("https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80")',
+              backgroundImage: `url(${castGwen})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
-                <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>BLACK CAT</h3>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>FELICIA HARDY</span>
+                <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>GWEN STACY</h3>
+                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>THE BRAINS & HEART</span>
               </div>
             </div>
 
-            {/* Card 3: Mr. Negative (Inverted Portrait using CSS filter) */}
+            {/* Card 3: Electro */}
             <div className="framed-image-container" style={{ 
               display: 'flex', 
               flexDirection: 'column', 
               minHeight: '220px', 
               backgroundColor: 'var(--bg-cinema-dark)', 
               border: '1px solid rgba(255,255,255,0.02)',
-              backgroundImage: 'url("https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=600&q=80")',
+              backgroundImage: `url(${castElectro})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              filter: 'invert(0.9) contrast(1.2)' /* Custom negative look */
+              backgroundPosition: 'center'
             }}>
               <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)' }}>
                 <span style={{ fontSize: '0.62rem', color: 'var(--color-marvel-red)', fontWeight: 800, letterSpacing: '1px' }}>SPECTACULAR LANDING</span>
-                <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>MR. NEGATIVE</h3>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>THE CORRUPTOR</span>
+                <h3 style={{ fontSize: '1rem', color: 'white', margin: '0.2rem 0', fontWeight: 800 }}>ELECTRO</h3>
+                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>THE SPARKS OF CHAOS</span>
               </div>
             </div>
 
